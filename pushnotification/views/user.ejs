@@ -1,0 +1,336 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+
+<title>User</title>
+
+<script src="/socket.io/socket.io.js"></script>
+
+</head>
+
+<body>
+
+<h2>Products</h2>
+
+<div id="notification"></div>
+
+<ul id="products">
+
+<% products.forEach(product=>{ %>
+
+<li>
+
+<%= product.name %> - ₹<%= product.price %>
+
+</li>
+
+<% }) %>
+
+</ul>
+
+<script>
+
+const socket=io();
+
+socket.on("newProduct",(product)=>{
+
+document.getElementById("notification").innerHTML=
+`
+<h3 style="color:green;">
+    Notify: New Product Added
+</h3>
+
+<p>${product.name} - ₹${product.price}</p>
+`;
+
+const li=document.createElement("li");
+
+li.innerHTML=product.name+" - ₹"+product.price;
+
+document.getElementById("products").appendChild(li);
+
+});
+
+
+
+</script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Storefront</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: #333; color: white; padding: 15px 30px; position: relative; z-index: 100; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: white; text-decoration: none; font-weight: bold; }
+        .notification-container { position: relative; }
+        .notification-bell { cursor: pointer; font-size: 20px; user-select: none; }
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
+        /* Dropdown styling */
+        .dropdown {
+            position: absolute;
+            right: 0;
+            top: 30px;
+            background: white;
+            color: #333;
+            width: 280px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .dropdown-header { padding: 10px; font-weight: bold; border-bottom: 1px solid #eee; background: #f5f5f5; font-size: 14px; }
+        .dropdown-item { padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item span { display: block; color: #777; font-size: 11px; margin-top: 3px; }
+        .empty-msg { padding: 15px; text-align: center; color: #999; font-size: 13px; }
+        .container { padding: 40px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2>My E-Commerce</h2>
+        <div class="nav-links">
+            <a href="/user">Home</a>
+            <a href="/all-products">All Products</a>
+            <div class="notification-container">
+                <div class="notification-bell" id="bellBtn">
+                    🔔 <span id="notif-count" class="badge">0</span>
+                </div>
+             
+                <div class="dropdown" id="notifDropdown">
+                    <div class="dropdown-header">Recent Notifications</div>
+                    <div id="dropdownItems">
+                        <div class="empty-msg">No new notifications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to the Store</h1>
+        <p>Click on the 🔔 bell icon in the navigation bar to preview live updates as products are added!</p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let unreadCount = 0;
+
+        const bellBtn = document.getElementById('bellBtn');
+        const dropdown = document.getElementById('notifDropdown');
+        const dropdownItems = document.getElementById('dropdownItems');
+        const badge = document.getElementById('notif-count');
+
+        // Toggle dropdown visibility
+        bellBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isDisplayed = dropdown.style.display === 'block';
+            dropdown.style.display = isDisplayed ? 'none' : 'block';
+            
+            // Optional: Clear badge count once clicked/viewed
+            if (!isDisplayed) {
+                unreadCount = 0;
+                badge.style.display = 'none';
+            }
+        });
+
+        // Close dropdown if clicking anywhere else on document
+        document.addEventListener('click', () => {
+            dropdown.style.display = 'none';
+        });
+
+        // Listen for real-time notification updates from server
+        socket.on('product-notification', (data) => {
+            unreadCount += 1;
+            
+            // Update Badge Count
+            badge.textContent = unreadCount;
+            badge.style.display = 'block';
+
+            // Remove empty placeholder message if it's the first item
+            const emptyMsg = dropdownItems.querySelector('.empty-msg');
+            if (emptyMsg) emptyMsg.remove();
+
+            // Create and prepend new notification element to the list
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            item.innerHTML = `📦 <strong>${data.product.name}</strong> was added for <strong>$${data.product.price}</strong>. <span>At ${data.product.addedAt}</span>`;
+            
+            dropdownItems.insertBefore(item, dropdownItems.firstChild);
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Storefront</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: #333; color: white; padding: 15px 30px; position: relative; z-index: 100; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: white; text-decoration: none; font-weight: bold; }
+        .notification-container { position: relative; }
+        .notification-bell { cursor: pointer; font-size: 20px; user-select: none; }
+        .badge { position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold; display: none; }
+        
+        .dropdown { position: absolute; right: 0; top: 30px; background: white; color: #333; width: 320px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; max-height: 350px; overflow-y: auto; border: 1px solid #ddd; }
+        .dropdown-header { padding: 10px; font-weight: bold; border-bottom: 1px solid #eee; background: #f5f5f5; font-size: 14px; }
+        
+        .dropdown-item { display: flex; gap: 10px; align-items: center; padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+        .dropdown-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+        .dropdown-item .details { flex: 1; }
+        .dropdown-item span { display: block; color: #777; font-size: 11px; margin-top: 3px; }
+        .empty-msg { padding: 15px; text-align: center; color: #999; font-size: 13px; }
+        .container { padding: 40px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2>My E-Commerce</h2>
+        <div class="nav-links">
+            <a href="/user">Home</a>
+            <a href="/all-products">All Products</a>
+            <div class="notification-container">
+                <div class="notification-bell" id="bellBtn">
+                    🔔 <span id="notif-count" class="badge">0</span>
+                </div>
+                <div class="dropdown" id="notifDropdown">
+                    <div class="dropdown-header">Recent Notifications</div>
+                    <div id="dropdownItems">
+                        <!-- FIXED: Render existing products on first page load using EJS -->
+                        <% if (products && products.length > 0) { %>
+                            <% products.slice().reverse().forEach(product => { %>
+                                <div class="dropdown-item">
+                                    <img src="<%= product.image %>" alt="Product image">
+                                    <div class="details">
+                                        <strong><%= product.name %></strong> was added for <strong>$<%= product.price %></strong>.
+                                        <span>At <%= product.addedAt %></span>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="empty-msg">No new notifications</div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to the Store</h1>
+        <p>Click on the 🔔 bell icon to see the product details alongside their images live!</p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let unreadCount = 0;
+
+        const bellBtn = document.getElementById('bellBtn');
+        const dropdown = document.getElementById('notifDropdown');
+        const dropdownItems = document.getElementById('dropdownItems');
+        const badge = document.getElementById('notif-count');
+
+        bellBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isDisplayed = dropdown.style.display === 'block';
+            dropdown.style.display = isDisplayed ? 'none' : 'block';
+            if (!isDisplayed) {
+                unreadCount = 0;
+                badge.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', () => { dropdown.style.display = 'none'; });
+
+        socket.on('product-notification', (data) => {
+            unreadCount += 1;
+            badge.textContent = unreadCount;
+            badge.style.display = 'block';
+
+            const emptyMsg = dropdownItems.querySelector('.empty-msg');
+            if (emptyMsg) emptyMsg.remove();
+
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            
+            // FIXED: Using basic text content properties inside structured element definitions 
+            // to safely escape HTML string inputs.
+            const imgElement = document.createElement('img');
+            imgElement.src = data.product.image;
+            imgElement.alt = "Product image";
+
+            const detailsElement = document.createElement('div');
+            detailsElement.className = 'details';
+            detailsElement.innerHTML = `
+                <strong id="p-name"></strong> was added for <strong id="p-price"></strong>.
+                <span>At ${data.product.addedAt}</span>
+            `;
+            
+            // Securely set the text data
+            detailsElement.querySelector('#p-name').textContent = data.product.name;
+            detailsElement.querySelector('#p-price').textContent = `$${data.product.price}`;
+
+            item.appendChild(imgElement);
+            item.appendChild(detailsElement);
+            
+            dropdownItems.insertBefore(item, dropdownItems.firstChild);
+        });
+    </script>
+</body>
+</html>

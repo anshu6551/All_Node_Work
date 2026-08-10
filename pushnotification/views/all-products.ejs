@@ -1,0 +1,131 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products Inventory</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: #333; color: white; padding: 15px 30px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: white; text-decoration: none; font-weight: bold; }
+        .container { padding: 40px; max-width: 800px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .product-card { background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .product-card h3 { margin: 0 0 10px 0; color: #333; }
+        .product-card p { margin: 0; color: #2ecc71; font-weight: bold; font-size: 18px; }
+        .no-products { text-align: center; color: #777; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+   
+    <nav class="navbar">
+        <h2>My E-Commerce</h2>
+        <div class="nav-links">
+            <a href="/user">Home</a>
+            <a href="/all-products" style="border-bottom: 2px solid white;">All Products</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>All Products Catalog</h1>
+        
+        <% if (products.length === 0) { %>
+            <div class="no-products">
+                <h3>No products available yet.</h3>
+                <p style="color: #666; font-size: 14px; font-weight: normal;">Go to the admin page to add some!</p>
+            </div>
+        <% } else { %>
+            <div class="product-grid">
+                <% products.forEach(product => { %>
+                    <div class="product-card">
+                        <h3><%= product.name %></h3>
+                        <p>$<%= product.price %></p>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products Inventory</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: #333; color: white; padding: 15px 30px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: white; text-decoration: none; font-weight: bold; }
+        .container { padding: 40px; max-width: 800px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .product-card { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; }
+        .product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; border: 1px solid #eee; }
+        .product-card h3 { margin: 5px 0; color: #333; font-size: 16px; word-wrap: break-word; } /* Added word-wrap to prevent long strings from breaking layout */
+        .product-card p { margin: 5px 0; color: #2ecc71; font-weight: bold; font-size: 18px; }
+        .no-products { text-align: center; color: #777; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2>My E-Commerce</h2>
+        <div class="nav-links">
+            <a href="/user">Home</a>
+            <a href="/all-products" style="border-bottom: 2px solid white;">All Products</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>All Products Catalog</h1>
+        
+        <!-- FIXED: Added check to see if products variable exists and is a valid array first -->
+        <% if (typeof products === 'undefined' || !products || products.length === 0) { %>
+            <div class="no-products">
+                <h3>No products available yet.</h3>
+                <p style="color: #666; font-size: 14px;">Go to the admin page to add some!</p>
+            </div>
+        <% } else { %>
+            <div class="product-grid">
+                <% products.forEach(product => { %>
+                    <div class="product-card">
+                        <!-- Added a default fallback option just in case an image string string gets broken -->
+                        <img src="<%= product.image || '/uploads/default.png' %>" alt="<%= product.name %>">
+                        <h3><%= product.name %></h3>
+                        <p>$<%= product.price %></p>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+</html>
